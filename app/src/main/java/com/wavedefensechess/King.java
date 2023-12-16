@@ -6,7 +6,6 @@ import java.util.List;
 public class King extends Piece
 {
 
-    // Inside your King class
     @Override
     public List<Position> getPossibleMoves(Position currentPosition, Board board) {
         List<Position> moves = new ArrayList<>();

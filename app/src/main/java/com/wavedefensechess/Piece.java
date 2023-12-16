@@ -8,9 +8,9 @@ public abstract class Piece
     protected PieceType type;
     protected char color;
     protected int timesMoved;
+    protected List<Effect> effects;
 
     public abstract List<Position> getPossibleMoves(Position currentPosition, Board board);
-
 
     public PieceType getType()
     {
@@ -31,4 +31,20 @@ public abstract class Piece
     {
         this.timesMoved = timesMoved;
     }
+
+    public void incrementMoves()
+    {
+        this.timesMoved++;
+    }
+
+    public void addEffect(Effect effect)
+    {
+        effects.add(effect);
+    }
+
+    public List<Effect> getEffects()
+    {
+        return effects;
+    }
+
 }
