@@ -12,6 +12,23 @@ public abstract class Piece
     public abstract List<Position> getPossibleMoves(Position currentPosition, Board board);
 
 
+    public PieceType getType()
+    {
+        return type;
+    }
 
+    public char getColor()
+    {
+        return color;
+    }
 
+    public int getTimesMoved()
+    {
+        return timesMoved;
+    }
+
+    public void setTimesMoved(int timesMoved)
+    {
+        this.timesMoved = timesMoved;
+    }
 }

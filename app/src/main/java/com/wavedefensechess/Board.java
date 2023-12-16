@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board
 {
-    private Piece[][] board;
+    private final Piece[][] board;
     private final int WIDTH;
     private final int HEIGHT;
 
@@ -19,8 +19,21 @@ public class Board
 
     public int totalBoardValue()
     {
-        return 0;
+        int totalValue = 0;
+
+        for (int x = 0; x < WIDTH; x++)
+        {
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                if (board[x][y] != null)
+                {
+                    totalValue += board[x][y].getType().getValue();
+                }
+            }
+        }
+        return totalValue;
     }
+
 
     public List<Position> getPossibleMovesForPieceAt(Position position)
     {
@@ -35,9 +48,24 @@ public class Board
 
     public boolean movePiece(Position start, Position end)
     {
+        if (!onTheBoard(start) || !onTheBoard(end))
+        {
+            return false;
+        }
 
-        return false;
+        Piece piece = board[start.getX()][start.getY()];
+
+        if (piece == null || isFriendlyOccupied(end, piece.getColor()))
+        {
+            return false;
+        }
+
+        board[end.getX()][end.getY()] = piece;
+        board[start.getX()][start.getY()] = null;
+
+        return true;
     }
+
 
     public boolean onTheBoard(Position p)
     {
@@ -51,14 +79,17 @@ public class Board
 
     public boolean isOccupied(Position pos)
     {
-
-        return false;
+        int x = pos.getX();
+        int y = pos.getY();
+        return onTheBoard(pos) && board[x][y] != null;
     }
-    public boolean isFriendlyOccupied(Position pos, char c)
+
+    public boolean isFriendlyOccupied(Position pos, char color)
     {
-
-
-        return false;
+        int x = pos.getX();
+        int y = pos.getY();
+        return isOccupied(pos) && board[x][y].getColor() == color;
     }
+
 
 }
