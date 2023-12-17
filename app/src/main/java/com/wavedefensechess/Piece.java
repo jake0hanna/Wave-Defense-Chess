@@ -9,6 +9,7 @@ public abstract class Piece
     protected char color;
     protected int timesMoved;
     protected List<Effect> effects;
+    protected int image;
 
     public abstract List<Position> getPossibleMoves(Position currentPosition, Board board);
 
@@ -45,6 +46,9 @@ public abstract class Piece
     public List<Effect> getEffects()
     {
         return effects;
+    }
+    public int getImageResource() {
+        return image;
     }
 
 }

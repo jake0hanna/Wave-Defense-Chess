@@ -1,0 +1,5 @@
+<!-- res/drawable/cell_highlight.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent" /> <!-- Keep the background transparent -->
+    <stroke android:width="2dp" android:color="#FF0000" /> <!-- Red border for highlighting -->
+</shape>

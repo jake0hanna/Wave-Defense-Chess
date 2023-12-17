@@ -1,12 +1,14 @@
 package com.wavedefensechess;
 
-public enum PieceType {
+public enum PieceType
+{
     KING(1000),
     QUEEN(45),
-    ROOK(25), // You need to assign a value for ROOK
-    KNIGHT(15), // Assign a value for KNIGHT
-    BISHOP(15), // Assign a value for BISHOP
-    PAWN(5); // Assign a value for PAWN
+    ROOK(25),
+    KNIGHT(15),
+    BISHOP(15),
+    PAWN(5),
+    BERSERKER(3);
 
     private final int pointValue;
 

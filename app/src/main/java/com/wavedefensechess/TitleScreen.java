@@ -2,16 +2,28 @@ package com.wavedefensechess;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-public class TitleScreen extends AppCompatActivity {
-
-    int fuck = 300;
+public class TitleScreen extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println(fuck);
+
+        Button startButton = findViewById(R.id.button);
+        startButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TitleScreen.this, GameInstance.class);
+                startActivity(intent);
+            }
+        });
     }
 }
