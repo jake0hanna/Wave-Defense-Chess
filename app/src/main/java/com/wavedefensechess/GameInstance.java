@@ -29,11 +29,7 @@ public class GameInstance extends AppCompatActivity
     private TextView scoreTextView;
     private TextView pointsTextView;
     private TextView waveTextView;
-    int movesPerTurn = DEFAULTMOVESPERTURN;
 
-    Piece[][] board = new Piece[BOARDWIDTH][BOARDHEIGHT];
-
-    Piece[] reservedPieces = new Piece[MAXPIECES];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
