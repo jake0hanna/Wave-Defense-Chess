@@ -21,7 +21,7 @@ public class TitleScreen extends AppCompatActivity
         {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TitleScreen.this, GameInstance.class);
+                Intent intent = new Intent(TitleScreen.this, GameActivity.class);
                 startActivity(intent);
             }
         });

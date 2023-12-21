@@ -66,6 +66,25 @@ public class Board
         return true;
     }
 
+    public void setPieceAtPosition(Position position, Piece piece)
+    {
+        board[position.getX()][position.getY()] = piece;
+    }
+
+    public Piece getPieceAtPosition(Position position)
+    {
+        return board[position.getX()][position.getY()];
+    }
+
+    public void removePieceAtPosition(Position position)
+    {
+        board[position.getX()][position.getY()] = null;
+    }
+
+    public PieceType getPieceTypeAtPosition(Position position)
+    {
+        return board[position.getX()][position.getY()].getType();
+    }
 
     public boolean onTheBoard(Position p)
     {
@@ -90,6 +109,5 @@ public class Board
         int y = pos.getY();
         return isOccupied(pos) && board[x][y].getColor() == color;
     }
-
 
 }

@@ -3,17 +3,14 @@ package com.wavedefensechess;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
-import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-public class GameInstance extends AppCompatActivity
+public class GameActivity extends AppCompatActivity
 {
 
     public static int BOARDWIDTH = 8;

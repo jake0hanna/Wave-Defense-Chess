@@ -1,17 +1,55 @@
 package com.wavedefensechess;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Piece
+public class Piece
 {
-
     protected PieceType type;
     protected char color;
     protected int timesMoved;
     protected List<Effect> effects;
-    protected int image;
 
-    public abstract List<Position> getPossibleMoves(Position currentPosition, Board board);
+    public Piece(PieceType type, char color)
+    {
+        this.type = type;
+        this.color = color;
+        this.timesMoved = 0;
+        effects = new ArrayList<>();
+    }
+    public Piece(PieceType type, char color, List<Effect> effects)
+    {
+        this.type = type;
+        this.color = color;
+        this.timesMoved = 0;
+        this.effects = effects;
+    }
+
+    public List<Position> getPossibleMoves(Position currentPosition, Board board)
+    {
+        PieceType type = board.getPieceTypeAtPosition(currentPosition);
+
+        switch(type)
+        {
+            case KING:
+                return null;
+            case QUEEN:
+                return null;
+            case ROOK:
+                return null;
+            case KNIGHT:
+                return null;
+            case BISHOP:
+                return null;
+            case PAWN:
+                return null;
+            case BERSERKER:
+                return null;
+            default:
+                return null;
+
+        }
+    }
 
     public PieceType getType()
     {
@@ -47,8 +85,6 @@ public abstract class Piece
     {
         return effects;
     }
-    public int getImageResource() {
-        return image;
-    }
+
 
 }

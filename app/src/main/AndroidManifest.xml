@@ -13,7 +13,7 @@
         android:theme="@style/Theme.WaveDefenseChess"
         tools:targetApi="31" >
         <activity
-            android:name=".GameInstance"
+            android:name=".GameActivity"
             android:exported="false" />
         <activity
             android:name=".TitleScreen"
