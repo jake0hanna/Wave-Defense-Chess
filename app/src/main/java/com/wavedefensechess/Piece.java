@@ -1,5 +1,6 @@
 package com.wavedefensechess;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,35 +11,110 @@ public class Piece
     protected int timesMoved;
     protected List<Effect> effects;
 
+    protected boolean jump = false;
+
+    public Piece(PieceType type, char color, List<Effect> effects, boolean jump)
+    {
+        this.type = type;
+        this.color = color;
+        this.timesMoved = 0;
+        this.effects = effects == null ? new ArrayList<>() : new ArrayList<>(effects);
+
+        if(type == PieceType.KNIGHT)
+            this.jump = true;
+        else
+            this.jump = jump;
+
+    }
+
     public Piece(PieceType type, char color)
     {
-        this.type = type;
-        this.color = color;
-        this.timesMoved = 0;
-        effects = new ArrayList<>();
-    }
-    public Piece(PieceType type, char color, List<Effect> effects)
-    {
-        this.type = type;
-        this.color = color;
-        this.timesMoved = 0;
-        this.effects = effects;
+        this(type, color, new ArrayList<>(), false);
     }
 
     public List<Position> getPossibleMoves(Position currentPosition, Board board)
     {
         PieceType type = board.getPieceTypeAtPosition(currentPosition);
 
+        ArrayList<Position> possibleMoves = new ArrayList<>();
+
         switch(type)
         {
             case KING:
-                return null;
+                for(Directions direction : Directions.values())
+                {
+                    Position position = new Position(currentPosition.getX() + direction.getX(), currentPosition.getY() + direction.getY());
+
+                    if(board.onTheBoard(position))
+                    {
+                        if(board.getPieceAtPosition(position) == null)
+                        {
+                            possibleMoves.add(position);
+                        }
+                        else if(board.getPieceAtPosition(position).getColor() != color)
+                        {
+                            possibleMoves.add(position);
+                        }
+
+                    }
+                }
+                return possibleMoves;
             case QUEEN:
-                return null;
+                for(Directions direction : Directions.values())
+                {
+                    Position position = new Position(currentPosition.getX() + direction.getX(), currentPosition.getY() + direction.getY());
+
+                    while(board.onTheBoard(position))
+                    {
+                        if(board.getPieceAtPosition(position) == null)
+                        {
+                            possibleMoves.add(position);
+                        }
+                        else if(board.getPieceAtPosition(position).getColor() != color)
+                        {
+                            possibleMoves.add(position);
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        position = new Position(position.getX() + direction.getX(), position.getY() + direction.getY());
+                    }
+                }
+                return possibleMoves;
             case ROOK:
-                return null;
+                for(Directions direction : Directions.values())
+                {
+                    if(direction == Directions.UP_LEFT || direction == Directions.UP_RIGHT || direction == Directions.DOWN_LEFT || direction == Directions.DOWN_RIGHT)
+                    {
+                        continue;
+                    }
+
+                    Position position = new Position(currentPosition.getX() + direction.getX(), currentPosition.getY() + direction.getY());
+
+                    while(board.onTheBoard(position))
+                    {
+                        if(board.getPieceAtPosition(position) == null)
+                        {
+                            possibleMoves.add(position);
+                        }
+                        else if(board.getPieceAtPosition(position).getColor() != color)
+                        {
+                            possibleMoves.add(position);
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        position = new Position(position.getX() + direction.getX(), position.getY() + direction.getY());
+                    }
+                }
+                return possibleMoves;
             case KNIGHT:
-                return null;
+                //NEEDS TO FIND SQUARES THAT KNIGHTS MOVE IN
+                possibleMoves.add(new Position(currentPosition.getX() + 2, currentPosition.getY() + 1));
             case BISHOP:
                 return null;
             case PAWN:
@@ -86,5 +162,9 @@ public class Piece
         return effects;
     }
 
+    public boolean isJump()
+    {
+        return jump;
+    }
 
 }

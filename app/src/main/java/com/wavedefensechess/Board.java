@@ -46,7 +46,9 @@ public class Board
         return new ArrayList<>();
     }
 
-    public boolean movePiece(Position start, Position end)
+
+    //this needs to make sure there are no pieces between the start and end if jump is false
+    public boolean movePiece(Position start, Position end, boolean jump)
     {
         if (!onTheBoard(start) || !onTheBoard(end))
         {
@@ -58,6 +60,18 @@ public class Board
         if (piece == null || isFriendlyOccupied(end, piece.getColor()))
         {
             return false;
+        }
+
+        if (!jump)
+        {
+            List<Position> path = start.getPathTo(end);
+            for (Position p : path)
+            {
+                if (isOccupied(p))
+                {
+                    return false;
+                }
+            }
         }
 
         board[end.getX()][end.getY()] = piece;
@@ -109,5 +123,6 @@ public class Board
         int y = pos.getY();
         return isOccupied(pos) && board[x][y].getColor() == color;
     }
+
 
 }

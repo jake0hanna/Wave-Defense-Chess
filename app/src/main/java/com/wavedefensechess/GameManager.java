@@ -3,43 +3,106 @@ package com.wavedefensechess;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameManager
 {
+    private enum GameState
+    {
+        PLACEMENT,
+        WAVE,
+        STORE
+    }
+
+    GameState currentPhase;
     int currentPoints;
     int score;
+
+    int turnCount;
+    int currentWave;
 
     Board board;
 
     Map<PieceType, Integer> reservedPieces;
 
 
+    /*
+
+        COPILOT REFER TO THIS FOR GAME LOGIC
+
+        Game Starts, get default pieces to be placed, allow player to place pieces on the bottom 3 rows of the board
+            MUST REQUIRE KING TO BE PRESENT BEFORE THE START BUTTON WORKS
+        wave is placed on the board, waits for input of first move from player,
+        if players move is valid, move is made, if not, continue waiting for a valid move
+        enemy moves x times,
+        repeat until there the player loses their king or there are no enemies on the board
+        if the player loses their king, game over
+        if there are no enemies on the board, the wave is over, points/score are awarded,
+            move all player pieces from the board to the reserves and the store is opened
+        repeat from the start of the placement phase and continue until the player loses, record score and return to main menu
+
+
+
+     */
+
     public GameManager(int height, int width)
     {
-        board = new Board(height, width);
+        board = new Board(width, height);
         reservedPieces = new HashMap<>();
 
         for(PieceType pieceType : PieceType.values())
         {
             reservedPieces.put(pieceType, 0);
         }
+
+        reservedPieces.put(PieceType.KING, 1);
+
+        turnCount = 0;
+        score = 0;
+        currentPoints = 0;
+        currentWave = 1;
+
+        currentPhase = GameState.PLACEMENT;
+
     }
 
-    public boolean placePieceFromReservesOnBoard(PieceType pieceType, Position position)
+    public boolean startGame()
     {
-        if (reservedPieces.get(pieceType) > 0) {
-            Piece piece = new Piece(pieceType, 'w', null);
+        if(reservedPieces.get(PieceType.KING) == 0)
+        {
+            return false;
+        }
+        else
+        {
+            currentPhase = GameState.WAVE;
+            generateWave(1);
+            return true;
+        }
+    }
+
+
+    public List<Position> getMovesForPieceAt(Position position)
+    {
+        return board.getPossibleMovesForPieceAt(position);
+    }
+
+    public boolean placePieceFromReserves(PieceType pieceType, Position position)
+    {
+        if (reservedPieces.get(pieceType) > 0)
+        {
+            Piece piece = new Piece(pieceType, 'w');
 
             if (board.getPieceAtPosition(position) == null)
             {
                 board.setPieceAtPosition(position, piece);
             }
-            else {
+            else
+            {
                 addPieceToReserves(board.getPieceTypeAtPosition(position));
                 board.setPieceAtPosition(position, piece);
             }
-            reservedPieces.remove(piece);
+            removePieceFromReserves(piece.getType());
             return true;
         }
         return false;
@@ -60,7 +123,7 @@ public class GameManager
             return false;
         }
 
-        board.movePiece(start, end);
+        board.movePiece(start, end, board.getPieceAtPosition(start).isJump());
 
         return true;
     }
@@ -68,6 +131,11 @@ public class GameManager
     public void removePieceAtPosition(Position position)
     {
         board.setPieceAtPosition(position, null);
+    }
+
+    public Map<PieceType, Integer> getReservedPieces()
+    {
+        return reservedPieces;
     }
 
     public void addPieceToReserves(PieceType pieceType)
@@ -80,6 +148,24 @@ public class GameManager
         reservedPieces.put(pieceType, reservedPieces.get(pieceType) - 1);
     }
 
+    public void addPoints(int points)
+    {
+        score += points;
+        currentPoints += points;
+    }
 
+    public void removePoints(int points)
+    {
+        currentPoints -= points;
+    }
+
+    public void generateWave(int i)
+    {
+        //I need some format to store predefined waves and then after it runs out of predefined waves it needs to randomly generate
+        //waves based on the current wave number
+
+
+
+    }
 
 }

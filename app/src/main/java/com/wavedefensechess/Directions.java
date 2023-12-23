@@ -18,11 +18,11 @@ public enum Directions {
         this.deltaY = deltaY;
     }
 
-    public int getDeltaX() {
+    public int getX() {
         return deltaX;
     }
 
-    public int getDeltaY() {
+    public int getY() {
         return deltaY;
     }
 }
