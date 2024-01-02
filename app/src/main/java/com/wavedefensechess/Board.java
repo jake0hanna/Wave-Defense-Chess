@@ -124,5 +124,33 @@ public class Board
         return isOccupied(pos) && board[x][y].getColor() == color;
     }
 
+    public boolean isPieceTypePresent(PieceType pieceType)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                if (board[x][y] != null && board[x][y].getType() == pieceType)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    public boolean isColorPresent(char color)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                if (board[x][y] != null && board[x][y].getColor() == color)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

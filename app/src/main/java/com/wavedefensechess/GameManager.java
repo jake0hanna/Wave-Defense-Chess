@@ -67,8 +67,12 @@ public class GameManager
 
     }
 
-    public boolean startGame()
+    public boolean startWave()
     {
+        if(currentPhase != GameState.PLACEMENT)
+        {
+            return false;
+        }
         if(reservedPieces.get(PieceType.KING) == 0)
         {
             return false;
@@ -76,11 +80,42 @@ public class GameManager
         else
         {
             currentPhase = GameState.WAVE;
-            generateWave(1);
+            generateWave(currentWave);
             return true;
         }
     }
 
+    public boolean acceptInput(Position start, Position end)
+    {
+        if(currentPhase == GameState.WAVE)
+        {
+            return attemptToMovePiece(start, end);
+        }
+
+        return false;
+    }
+
+    public boolean placePiece(Position position, PieceType pieceType)
+    {
+        if(currentPhase == GameState.PLACEMENT)
+        {
+            return placePieceFromReserves(pieceType, position);
+        }
+        return false;
+    }
+
+    public boolean checkIfGameIsOver()
+    {
+        //should return true if the game is over, false if it is not, should check the board state for a king after every move
+        return !board.isPieceTypePresent(PieceType.KING);
+
+    }
+
+    public boolean checkIfWaveIsOver()
+    {
+        //should return true if the wave is over, false if it is not, should check the board state for enemies after every move
+        return !board.isColorPresent('b');
+    }
 
     public List<Position> getMovesForPieceAt(Position position)
     {
