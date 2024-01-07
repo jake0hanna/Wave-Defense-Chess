@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GameManager
 {
-    private enum GameState
+    public enum GameState
     {
         PLACEMENT,
         WAVE,
@@ -202,5 +202,12 @@ public class GameManager
 
 
     }
+
+    public GameState getCurrentPhase()
+    {
+        return currentPhase;
+    }
+
+
 
 }

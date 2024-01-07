@@ -47,6 +47,7 @@ public class Board
     }
 
 
+
     //this needs to make sure there are no pieces between the start and end if jump is false
     public boolean movePiece(Position start, Position end, boolean jump)
     {

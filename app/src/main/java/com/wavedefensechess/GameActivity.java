@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 public class GameActivity extends AppCompatActivity
 {
 
+    public GameManager gameManager;
     public static int BOARDWIDTH = 8;
     public static int BOARDHEIGHT = 14;
     public static int MAXPIECES = 100;
@@ -20,13 +23,18 @@ public class GameActivity extends AppCompatActivity
 
     int overlayHeight = 500;
 
-    int points = 0;
-    int score = 0;
-
     private TextView scoreTextView;
     private TextView pointsTextView;
     private TextView waveTextView;
 
+    private view reservesMenu;
+    private view storeMenu;
+    private view startButton;
+
+
+    private TextView highlightedCell = null;
+    private int highlightedRow = -1;
+    private int highlightedCol = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,14 +48,15 @@ public class GameActivity extends AppCompatActivity
 
         GridLayout gameBoard = findViewById(R.id.gameBoard);
 
-        gameBoard.setColumnCount(BOARDWIDTH);
-        gameBoard.setRowCount(BOARDHEIGHT);
+        gameManager = new GameManager(BOARDHEIGHT, BOARDWIDTH);
 
         int colorWhite = getResources().getColor(R.color.white);
         int colorLightPaleBlue = getResources().getColor(R.color.lightPaleBlue);
 
-        for (int row = 0; row < BOARDHEIGHT; row++) {
-            for (int col = 0; col < BOARDWIDTH; col++) {
+        for (int row = 0; row < BOARDHEIGHT; row++)
+        {
+            for (int col = 0; col < BOARDWIDTH; col++)
+            {
                 TextView cell = new TextView(this);
 
                 cell.setBackgroundColor((row + col) % 2 == 0 ? colorWhite : colorLightPaleBlue);
@@ -67,11 +76,10 @@ public class GameActivity extends AppCompatActivity
 
 
     }
-    private TextView highlightedCell = null;
-    private int highlightedRow = -1;
-    private int highlightedCol = -1;
 
-    private class CellClickListener implements View.OnClickListener {
+
+    private class CellClickListener implements View.OnClickListener
+    {
         private int row, col;
 
         public CellClickListener(int row, int col) {
@@ -80,8 +88,11 @@ public class GameActivity extends AppCompatActivity
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
+            //BASED ON GAME STATE if()
             if (highlightedCell != null) {
+                onCellHighlighted(row, col);
                 resetHighlightedCell(); // Reset the previous cell's highlight
             }
             highlightedCell = (TextView) v;
@@ -90,7 +101,8 @@ public class GameActivity extends AppCompatActivity
             applyHighlightToCell(highlightedCell); // Apply highlight to the new cell
         }
 
-        private void resetHighlightedCell() {
+        private void resetHighlightedCell()
+        {
             // Logic to remove the highlight from the previously highlighted cell
             int originalColor = (highlightedRow + highlightedCol) % 2 == 0 ?
                     ContextCompat.getColor(getApplicationContext(), R.color.white) :
@@ -113,8 +125,11 @@ public class GameActivity extends AppCompatActivity
 
 
 
-    private void onCellHighlighted(int row, int col) {
-        // Implement logic to use the highlighted cell information
+    private void onCellHighlighted(int row, int col)
+    {
+        // Is called when the highlight function has info and is receiving more,
+        // First cell is highlightedRow, second is row
+
     }
 
 
@@ -133,9 +148,52 @@ public class GameActivity extends AppCompatActivity
     {
         scoreTextView.setText("Score: " + score);
         pointsTextView.setText("Points: " + points);
+        waveTextView.setText("Wave: " + wave);
+
+        //retreive board info from gameManager and render it
+
+        Board board = gameManager.getBoard();
+
+        for(int i = 0; i < BOARDHEIGHT; i++)
+        {
+            for(int j = 0; j < BOARDWIDTH; j++)
+            {
+                Piece piece = board.getPieceAtPosition(new Position(i, j));
+                if(piece != null)
+                {
+                    //render piece
+
+                }
+            }
+        }
+
+        GameManager.GameState currentState = gameManager.getCurrentPhase();
+
+        switch (currentState) {
+            case PLACEMENT:
+
+                reservesLayout.setVisibility(View.VISIBLE);
+                startButton.setVisibility(View.VISIBLE);
+
+                storeLayout.setVisibility(View.GONE);
+
+                break;
+            case WAVE:
+
+                overlayContainer.setVisibility(View.GONE);
+
+                break;
+            case STORE:
+
+                storeLayout.setVisibility(View.VISIBLE);
+                reservesLayout.setVisibility(View.GONE);
+                startButton.setVisibility(View.GONE);
+
+                break;
+        }
+
     }
 
-    // Example methods to update score and points
     public void increaseScore(int increment)
     {
         score += increment;
@@ -150,8 +208,8 @@ public class GameActivity extends AppCompatActivity
 
 }
 
-// Needs to display a board, probably 8 wide by 14 tall
-// Needs to track points, points are gained for each piece taken, maybe some combo mechanics
+// Needs to display a board, 8 wide by 14 tall
+// Needs to track points, points are gained for each piece taken
 // Needs to be designed with room for special types of pieces
 // Initialization: Open board, allow placement of predefined pieces in a select region,
 //                 allow changes until start is clicked
@@ -161,7 +219,9 @@ public class GameActivity extends AppCompatActivity
 //      - enemy piece(s) move or game detects too few pieces / too many turns
 //          if the wave ends:
 //              - opens store, waits for user to buy things or click done,
-//              - if the next wave allows piece placement repeat initialization
-//              - else start next wave
+//              - repeat placement phase
+//              - if user clicks start button start next wave
 //      - repeat
+
+// the store should appear near the top of the screen, the reserves menu slightly below it, and the start button at the same place the store does just at different times
 

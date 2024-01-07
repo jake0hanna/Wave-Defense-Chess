@@ -10,17 +10,27 @@ public enum PieceType
     KNIGHT(15, 50, null),
     BISHOP(15, 50, null),
     PAWN(5, 10, null),
-    BERSERKER(5, 20,null);
+    BERSERKER(5, 20,null),
 
+    Archer(15, 50, null),
     //Archer: disappears after 3 moves, has jumping, can move 1 left or right, or 2-3 forward, if it moves forward, moves back after
 
-    //Squire: a pawn that can move 1 in any direction, if it survives a wave, it promotes randomly to any unit
+    Squire(10, 25, null),
+    //Squire: a pawn that can move 1 in any direction, if it survives a wave, it promotes to any random unit
 
-    //Mimic: can only move forward 1-2 squares, if it captures, it becomes that piece
+    Mimic(1, 100, null),
+    //Mimic: can only move forward 1 square and capture 1 cell backwards, if it captures, it becomes that piece
 
+    Magus(25, 100, null),
     //Magus: can move 1 in a line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
 
     //Ninja: moves 2 diagonally, if it captures, it randomly moves
+
+    //Defender: can move to any cell in a 2 cell circle around the king or move 1 cell in any direction
+
+    //Warlord: can move 2 in a 2 cell circle in any direction
+
+    //
 
     private final int pointValue;
     private final int cost;
