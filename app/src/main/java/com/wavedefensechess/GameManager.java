@@ -209,5 +209,51 @@ public class GameManager
     }
 
 
+    public void setCurrentPhase(GameState currentPhase) {
+        this.currentPhase = currentPhase;
+    }
 
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getTurnCount() {
+        return turnCount;
+    }
+
+    public void setTurnCount(int turnCount) {
+        this.turnCount = turnCount;
+    }
+
+    public int getCurrentWave() {
+        return currentWave;
+    }
+
+    public void setCurrentWave(int currentWave) {
+        this.currentWave = currentWave;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setReservedPieces(Map<PieceType, Integer> reservedPieces) {
+        this.reservedPieces = reservedPieces;
+    }
 }

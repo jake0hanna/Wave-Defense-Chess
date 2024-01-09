@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 public class GameActivity extends AppCompatActivity
 {
@@ -27,9 +30,14 @@ public class GameActivity extends AppCompatActivity
     private TextView pointsTextView;
     private TextView waveTextView;
 
-    private view reservesMenu;
-    private view storeMenu;
-    private view startButton;
+
+    private HorizontalScrollView reservesScrollView;
+    private LinearLayout reservesContainer;
+
+    private HorizontalScrollView storeScrollView;
+    private LinearLayout storeLayout;
+
+    private Button startButton;
 
 
     private TextView highlightedCell = null;

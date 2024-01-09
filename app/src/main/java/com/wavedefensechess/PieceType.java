@@ -21,14 +21,17 @@ public enum PieceType
     Mimic(1, 100, null),
     //Mimic: can only move forward 1 square and capture 1 cell backwards, if it captures, it becomes that piece
 
-    Magus(25, 100, null),
-    //Magus: can move 1 in a line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
+    Magus(10, 200, null),
+    //Magus: can move 1 in a horizontal line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
 
-    //Ninja: moves 2 diagonally, if it captures, it randomly moves
+    Ninja(50, 200, null),
+    //Ninja: moves 2 diagonally, if it captures, it moves to a random place on the board
 
+    Defender(1, 200, null),
     //Defender: can move to any cell in a 2 cell circle around the king or move 1 cell in any direction
 
-    //Warlord: can move 2 in a 2 cell circle in any direction
+    Warlord(75, 200, null);
+    //Warlord: can move in a 3 cell circle
 
     //
 
@@ -48,5 +51,7 @@ public enum PieceType
     }
 
     public int getCost() { return this.cost; }
+
+    public Image getImage() { return this.image; }
 
 }
