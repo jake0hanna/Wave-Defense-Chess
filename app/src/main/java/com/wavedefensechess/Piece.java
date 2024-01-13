@@ -241,6 +241,59 @@ public class Piece
                     }
                 }
                 return possibleMoves;
+            case ARCHER://this piece is intended to move one cell left or right, or 2-3 cells forward, if it moves forward, it moves back after, is a jumping piece
+                for(Directions direction : Directions.values())
+                {
+                    if(direction ==  Directions.DOWN || direction == Directions.UP_LEFT || direction == Directions.DOWN_LEFT || direction == Directions.UP_RIGHT || direction == Directions.DOWN_RIGHT)
+                    {
+                        continue;
+                    }
+
+                    Position position = new Position(currentPosition.getX() + direction.getX(), currentPosition.getY() + direction.getY());
+
+                    if(direction == Directions.UP)
+                    {//add two and then three spaces forward and add that to possible moves
+                        if(board.onTheBoard(position))
+                        {
+                            if(board.getPieceAtPosition(position) == null)
+                            {
+                                possibleMoves.add(position);
+                            }
+                            else if(board.getPieceAtPosition(position).getColor() != color)
+                            {
+                                possibleMoves.add(position);
+                            }
+                        }
+                    }
+                    else
+                    {//move one left or right
+                        if(board.onTheBoard(position))
+                        {
+                            if(board.getPieceAtPosition(position) == null)
+                            {
+                                possibleMoves.add(position);
+                            }
+                            else if(board.getPieceAtPosition(position).getColor() != color)
+                            {
+                                possibleMoves.add(position);
+                            }
+                        }
+                    }
+                }
+                return possibleMoves;
+            case SQUIRE://this piece is intended to move one cell in any direction, if it survives a wave, it promotes to any random unit
+                return possibleMoves;
+            case MIMIC://this piece is intended to move forward one cell and capture one cell backwards, if it captures, it becomes that piece
+                return possibleMoves;
+            case MAGUS://this piece is intended to move one cell in a horizontal line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
+                return possibleMoves;
+            case NINJA://this piece is intended to move two cells diagonally, if it captures, it moves to a random place on the board
+                return possibleMoves;
+            case DEFENDER://this piece is intended to move to any cell in a 2 cell circle around the king or move 1 cell in any direction
+                return possibleMoves;
+            case WARLORD://this piece is intended to move in a 3 cell circle
+                return possibleMoves;
+
             default:
                 return null;
 

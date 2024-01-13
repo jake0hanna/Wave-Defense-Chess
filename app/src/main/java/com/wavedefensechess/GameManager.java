@@ -29,7 +29,6 @@ public class GameManager
 
     /*
 
-        COPILOT REFER TO THIS FOR GAME LOGIC
 
         Game Starts, get default pieces to be placed, allow player to place pieces on the bottom 3 rows of the board
             MUST REQUIRE KING TO BE PRESENT BEFORE THE START BUTTON WORKS
