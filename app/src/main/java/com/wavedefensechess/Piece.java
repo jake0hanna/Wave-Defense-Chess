@@ -281,8 +281,6 @@ public class Piece
                     }
                 }
                 return possibleMoves;
-            case SQUIRE://this piece is intended to move one cell in any direction, if it survives a wave, it promotes to any random unit
-                return possibleMoves;
             case MIMIC://this piece is intended to move forward one cell and capture one cell backwards, if it captures, it becomes that piece
                 return possibleMoves;
             case MAGUS://this piece is intended to move one cell in a horizontal line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
