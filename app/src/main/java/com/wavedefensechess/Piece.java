@@ -286,6 +286,7 @@ public class Piece
             case MAGUS://this piece is intended to move one cell in a horizontal line, has jumping, can move 4 squares in front of it, if it captures, destroys all pieces in a plus shape then moves back
                 return possibleMoves;
             case NINJA://this piece is intended to move two cells diagonally, if it captures, it moves to a random place on the board
+                
                 return possibleMoves;
             case DEFENDER://this piece is intended to move to any cell in a 2 cell circle around the king or move 1 cell in any direction
                 return possibleMoves;
